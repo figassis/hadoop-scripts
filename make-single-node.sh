@@ -3,11 +3,10 @@ sudo apt-get update
 
 # Download java jdk
 sudo apt-get install openjdk-7-jdk
-cd /usr/lib/jvm
-sudo ln -s java-7-openjdk-amd64 jdk
+sudo ln -s /usr/lib/jvm/java-7-openjdk-amd64 jdk
 
 # Uncommment to install ssh 
-sudo apt-get install openssh-server
+# sudo apt-get install openssh-server
 
 # Add hadoop user
 sudo addgroup hadoop
@@ -21,12 +20,12 @@ sudo sh -c 'cat /home/hduser/.ssh/id_rsa.pub >> /home/hduser/.ssh/authorized_key
 
 # Download Hadoop and set permissons
 cd ~
-if [ ! -f hadoop-2.2.0.tar.gz ]; then
-	wget http://apache.osuosl.org/hadoop/common/hadoop-2.2.0/hadoop-2.2.0.tar.gz
+if [ ! -f hadoop-2.4.0.tar.gz ]; then
+	wget http://www.motorlogy.com/apache/hadoop/common/current/hadoop-2.4.0.tar.gz
 fi
-sudo tar vxzf hadoop-2.2.0.tar.gz -C /usr/local
+sudo tar vxzf hadoop-2.4.0.tar.gz -C /usr/local
 cd /usr/local
-sudo mv hadoop-2.2.0 hadoop
+sudo mv hadoop-2.4.0 hadoop
 sudo chown -R hduser:hadoop hadoop
 
 # Hadoop variables
@@ -77,4 +76,3 @@ sudo -u hduser sed -i.bak 's=<configuration>=<configuration>\<property>\<name>df
 # Example
 # sudo -u hduser cd /usr/local/hadoop
 # sudo -u hduser hadoop jar ./share/hadoop/mapreduce/hadoop-mapreduce-examples-2.2.0.jar pi 2 5
-
