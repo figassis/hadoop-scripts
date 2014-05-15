@@ -23,7 +23,7 @@ cd /usr/local
 mv hadoop-2.4.0 hadoop
 
 # Hadoop variables
-echo export JAVA_HOME=/usr/lib/jvm/jdk/ >> ~/.bashrc
+echo export JAVA_HOME=/root/jdk >> ~/.bashrc
 echo export HADOOP_INSTALL=/usr/local/hadoop >> ~/.bashrc
 echo export PATH=\$PATH:\$HADOOP_INSTALL/bin >> ~/.bashrc
 echo export PATH=\$PATH:\$HADOOP_INSTALL/sbin >> ~/.bashrc
@@ -36,7 +36,7 @@ echo export HADOOP_OPTS=\"-Djava.library.path=\$HADOOP_INSTALL/lib\" >> ~/.bashr
 
 # Modify JAVA_HOME 
 cd /usr/local/hadoop/etc/hadoop
-sed -i.bak s=\${JAVA_HOME}=/usr/lib/jvm/jdk/=g hadoop-env.sh
+sed -i.bak s=\${JAVA_HOME}=/root/jdk=g hadoop-env.sh
 pwd
 
 # Check that Hadoop is installed
