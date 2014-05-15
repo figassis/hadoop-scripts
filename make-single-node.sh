@@ -10,7 +10,7 @@ ln -s /usr/lib/jvm/java-7-openjdk-amd64 jdk
 
 # Generate keys
 ssh-keygen -t rsa -P ''
-sh -c 'cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys'
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 #ssh localhost
 
 # Download Hadoop and set permissons
@@ -23,16 +23,16 @@ cd /usr/local
 mv hadoop-2.4.0 hadoop
 
 # Hadoop variables
-sh -c 'echo export JAVA_HOME=/usr/lib/jvm/jdk/ >> ~/.bashrc'
-sh -c 'echo export HADOOP_INSTALL=/usr/local/hadoop >> ~/.bashrc'
-sh -c 'echo export PATH=\$PATH:\$HADOOP_INSTALL/bin >> ~/.bashrc'
-sh -c 'echo export PATH=\$PATH:\$HADOOP_INSTALL/sbin >> ~/.bashrc'
-sh -c 'echo export HADOOP_MAPRED_HOME=\$HADOOP_INSTALL >> ~/.bashrc'
-sh -c 'echo export HADOOP_COMMON_HOME=\$HADOOP_INSTALL >> ~/.bashrc'
-sh -c 'echo export HADOOP_HDFS_HOME=\$HADOOP_INSTALL >> ~/.bashrc'
-sh -c 'echo export YARN_HOME=\$HADOOP_INSTALL >> ~/.bashrc'
-sh -c 'echo export HADOOP_COMMON_LIB_NATIVE_DIR=\$\{HADOOP_INSTALL\}/lib/native >> ~/.bashrc'
-sh -c 'echo export HADOOP_OPTS=\"-Djava.library.path=\$HADOOP_INSTALL/lib\" >> ~/.bashrc'
+echo export JAVA_HOME=/usr/lib/jvm/jdk/ >> ~/.bashrc
+echo export HADOOP_INSTALL=/usr/local/hadoop >> ~/.bashrc
+echo export PATH=\$PATH:\$HADOOP_INSTALL/bin >> ~/.bashrc
+echo export PATH=\$PATH:\$HADOOP_INSTALL/sbin >> ~/.bashrc
+echo export HADOOP_MAPRED_HOME=\$HADOOP_INSTALL >> ~/.bashrc
+echo export HADOOP_COMMON_HOME=\$HADOOP_INSTALL >> ~/.bashrc
+echo export HADOOP_HDFS_HOME=\$HADOOP_INSTALL >> ~/.bashrc
+echo export YARN_HOME=\$HADOOP_INSTALL >> ~/.bashrc
+echo export HADOOP_COMMON_LIB_NATIVE_DIR=\$\{HADOOP_INSTALL\}/lib/native >> ~/.bashrc
+echo export HADOOP_OPTS=\"-Djava.library.path=\$HADOOP_INSTALL/lib\" >> ~/.bashrc
 
 # Modify JAVA_HOME 
 cd /usr/local/hadoop/etc/hadoop
@@ -50,15 +50,15 @@ cp mapred-site.xml.template mapred-site.xml
 sed -i.bak 's=<configuration>=<configuration>\<property>\<name>mapreduce\.framework\.name</name>\<value>yarn</value>\</property>=g' mapred-site.xml
  
 cd ~
-mkdir -p mydata/hdfs/namenode
-mkdir -p mydata/hdfs/datanode
+mkdir -p /usr/local/hadoop_store/hdfs/namenode
+mkdir -p /usr/local/hadoop_store/hdfs/datanode
 
 cd /usr/local/hadoop/etc/hadoop
-sed -i.bak 's=<configuration>=<configuration>\<property>\<name>dfs\.replication</name>\<value>1\</value>\</property>\<property>\<name>dfs\.namenode\.name\.dir</name>\<value>file:/home/hduser/mydata/hdfs/namenode</value>\</property>\<property>\<name>dfs\.datanode\.data\.dir</name>\<value>file:/home/hduser/mydata/hdfs/datanode</value>\</property>=g' hdfs-site.xml
+sed -i.bak 's=<configuration>=<configuration>\<property>\<name>dfs\.replication</name>\<value>1\</value>\</property>\<property>\<name>dfs\.namenode\.name\.dir</name>\<value>file:/usr/local/hadoop_store/hdfs/namenode</value>\</property>\<property>\<name>dfs\.datanode\.data\.dir</name>\<value>file:/usr/local/hadoop_store/hdfs/datanode</value>\</property>=g' hdfs-site.xml
 
 
 # Format Namenode
-sh -c 'hdfs namenode -format'
+hdfs namenode -format
 
 # Start Hadoop Service
 start-dfs.sh
