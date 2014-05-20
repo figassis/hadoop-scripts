@@ -22,7 +22,20 @@ tar vxzf hadoop-2.4.0.tar.gz -C /usr/local
 cd /usr/local
 mv hadoop-2.4.0 hadoop
 
-# Hadoop variables
+
+# Hadoop variables to set now
+export JAVA_HOME=/root/jdk
+export HADOOP_INSTALL=/usr/local/hadoop
+export PATH=\$PATH:\$HADOOP_INSTALL/bin
+export PATH=\$PATH:\$HADOOP_INSTALL/sbin
+export HADOOP_MAPRED_HOME=\$HADOOP_INSTALL
+export HADOOP_COMMON_HOME=\$HADOOP_INSTALL
+export HADOOP_HDFS_HOME=\$HADOOP_INSTALL
+export YARN_HOME=\$HADOOP_INSTALL
+export HADOOP_COMMON_LIB_NATIVE_DIR=\$\{HADOOP_INSTALL\}/lib/native
+export HADOOP_OPTS=\"-Djava.library.path=\$HADOOP_INSTALL/lib\"
+
+# Hadoop variables to set after a reboot
 echo export JAVA_HOME=/root/jdk >> ~/.bashrc
 echo export HADOOP_INSTALL=/usr/local/hadoop >> ~/.bashrc
 echo export PATH=\$PATH:\$HADOOP_INSTALL/bin >> ~/.bashrc
@@ -33,6 +46,8 @@ echo export HADOOP_HDFS_HOME=\$HADOOP_INSTALL >> ~/.bashrc
 echo export YARN_HOME=\$HADOOP_INSTALL >> ~/.bashrc
 echo export HADOOP_COMMON_LIB_NATIVE_DIR=\$\{HADOOP_INSTALL\}/lib/native >> ~/.bashrc
 echo export HADOOP_OPTS=\"-Djava.library.path=\$HADOOP_INSTALL/lib\" >> ~/.bashrc
+
+
 
 # Modify JAVA_HOME 
 cd /usr/local/hadoop/etc/hadoop
@@ -60,6 +75,7 @@ sed -i.bak 's=<configuration>=<configuration>\<property>\<name>dfs\.replication<
 # Format Namenode
 hdfs namenode -format
 
+
 # Start Hadoop Service
 start-dfs.sh
 start-yarn.sh
@@ -69,4 +85,4 @@ jps
 
 # Example
 # sudo -u hduser cd /usr/local/hadoop
-/usr/local/hadoop/bin/hadoop jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.4.0.jar pi 4 100
+/usr/local/hadoop/bin/hadoop jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.4.0.jar pi 6 1000
